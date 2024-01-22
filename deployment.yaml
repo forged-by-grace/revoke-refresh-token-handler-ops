@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: revoke-refresh-token
+  labels:
+    app: revoke-refresh-token-app
+  namespace: token-handler
+spec:
+  selector:
+    matchLabels:
+      app: revoke-refresh-token-app
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: revoke-refresh-token-app
+    spec:
+      containers:
+      - name: revoke-refresh-token-app
+        image: conano/revoke-refresh-token-handler:latest        
+        envFrom:
+        - secretRef:
+            name: revoke-refresh-token-secret
+        imagePullPolicy: IfNotPresent        
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        
