@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: revoke-refresh-token-app
-        image: conano/revoke-refresh-token-handler:latest        
+        image: conano/revoke-refresh-token-handler:0.0.1-3
         envFrom:
         - secretRef:
             name: revoke-refresh-token-secret
